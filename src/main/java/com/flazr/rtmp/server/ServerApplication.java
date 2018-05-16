@@ -55,7 +55,7 @@ public class ServerApplication {
             if(streamName.startsWith("mp4:")) {
                 readerPlayName = streamName.substring(4);
                 return new F4vReader(path + readerPlayName);
-            } else {                
+            } else {
                 if(streamName.lastIndexOf('.') < streamName.length() - 4) {
                     readerPlayName = streamName + ".flv";
                 } else {

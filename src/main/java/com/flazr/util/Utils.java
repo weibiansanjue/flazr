@@ -36,8 +36,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.flazr.rtmp.RtmpConfig;
 
 public class Utils {
+	
+    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
     private Utils() { }
 
@@ -184,7 +190,7 @@ public class Utils {
 			HttpResponse response = client.execute(method);
 			result = EntityUtils.toString(response.getEntity());
 		} catch (Exception e) {
-            e.printStackTrace();			
+            e.printStackTrace();	
 		}
 		return result;
     }
@@ -204,13 +210,13 @@ public class Utils {
         try {
             Socket s = new Socket(InetAddress.getByName("127.0.0.1"), port);
             OutputStream out = s.getOutputStream();
-            System.err.println("sending server stop request");
+            logger.error("sending server stop request");
             out.write(("\r\n").getBytes());
             out.flush();
             s.close();
         } catch(Exception e) {
             // can happen when called twice by jvm shutdown hook
-            System.err.println("stop monitor thread has terminated");
+            logger.error("stop monitor thread has terminated");
         }
     }
 
@@ -223,7 +229,7 @@ public class Utils {
     + "If not, see <http://www.gnu.org/licenses/>\n";
 
     public static void printlnCopyrightNotice() {
-        System.err.println(COPYRIGHT_NOTICE);
+        logger.error(COPYRIGHT_NOTICE);
     }
 
     public static String trimSlashes(final String raw) {
